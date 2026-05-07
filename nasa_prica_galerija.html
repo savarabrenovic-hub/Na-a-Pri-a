@@ -43,6 +43,15 @@ html,body{width:100%;height:100%;background:#2a1f18;overflow:hidden;font-family:
 </head>
 <body>
 
+
+<div id="lockscreen" style="position:fixed;inset:0;background:#1a0f09;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+  <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,8vw,4rem);font-weight:300;color:#fdf6ee;text-align:center;margin-bottom:0.5rem;">Naša<em style="display:block;font-style:italic;color:#c9736a;font-size:0.5em;">Priča</em></div>
+  <div style="width:40px;height:1px;background:#b8955a;margin:1.5rem auto;"></div>
+  <input id="pin" type="password" maxlength="4" placeholder="✦ ✦ ✦ ✦" 
+    style="background:transparent;border:none;border-bottom:1px solid rgba(184,149,90,0.5);color:#b8955a;font-family:Montserrat,sans-serif;font-size:1.4rem;text-align:center;width:120px;outline:none;letter-spacing:0.5em;padding:0.3rem;">
+  <div id="pin-err" style="color:#c9736a;font-size:0.65rem;letter-spacing:0.2em;margin-top:1rem;opacity:0;transition:opacity 0.3s;">Pogrešna šifra</div>
+</div>
+
 <div id="intro">
   <div class="io">&#10022; &#10022; &#10022;</div>
   <h1 class="it">Naša<em>Priča</em></h1>
@@ -197,5 +206,19 @@ document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')next();i
 document.addEventListener('touchstart',function(e){window._tx=e.touches[0].clientX;});
 document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-window._tx;if(Math.abs(dx)>50){if(dx<0)next();else prev();}});
 </script>
+
+<script>
+document.getElementById('pin').addEventListener('input', function() {
+  if (this.value === '1605') {
+    document.getElementById('lockscreen').style.display = 'none';
+  } else if (this.value.length === 4) {
+    document.getElementById('pin-err').style.opacity = '1';
+    var t = this;
+    setTimeout(function(){ t.value=''; document.getElementById('pin-err').style.opacity='0'; }, 800);
+  }
+});
+document.getElementById('pin').focus();
+</script>
+
 </body>
 </html>
